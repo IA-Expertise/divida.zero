@@ -35,7 +35,11 @@ def _init_state() -> None:
 
 
 def _header_and_nav() -> None:
-    st.markdown('<span class="rz-topchip">← Início</span>', unsafe_allow_html=True)
+    top_left, _ = st.columns([1, 6])
+    with top_left:
+        if st.button("← Início", key="btn_top_home"):
+            st.session_state[INTRO_KEY] = False
+            st.rerun()
     st.markdown("## 🧭 Bússola Inteligente - Dívida Zero")
     st.markdown(
         '<p class="rz-sub">Use a Bússola Inteligente para corrigir a rota da sua empresa e organizar a quitação.</p>',
