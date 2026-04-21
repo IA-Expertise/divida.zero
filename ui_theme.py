@@ -56,10 +56,13 @@ def render_theme() -> None:
             color: #f4f8ff;
         }
         div[data-testid="stMetricLabel"] {
-            color: #b9ccee;
+            color: #ffffff !important;
         }
         .stMarkdown p, .stMarkdown li, .stMarkdown span, .stCaption, label {
             color: #ffffff !important;
+        }
+        .stCaption, [data-testid="stCaptionContainer"] p {
+            color: #dfeaff !important;
         }
         [data-testid="stForm"] p,
         [data-testid="stForm"] label,
@@ -73,6 +76,23 @@ def render_theme() -> None:
             color: #ffffff !important;
         }
         .stRadio label, .stCheckbox label, .stSelectbox label, .stTextInput label, .stNumberInput label, .stTextArea label {
+            color: #ffffff !important;
+        }
+        [data-testid="stExpander"] summary p,
+        [data-testid="stExpander"] summary span,
+        [data-testid="stExpander"] label,
+        [data-testid="stExpander"] p {
+            color: #ffffff !important;
+        }
+        [data-testid="stExpander"] {
+            border: 1px solid rgba(123, 165, 242, 0.22);
+            border-radius: 10px;
+            background: rgba(17, 36, 67, 0.35);
+        }
+        [data-testid="stCheckbox"] span {
+            color: #f4f8ff !important;
+        }
+        .stAlert p, .stSuccess p, .stInfo p, .stWarning p, .stError p {
             color: #ffffff !important;
         }
         [data-baseweb="input"] input,
