@@ -45,7 +45,7 @@ def render_theme() -> None:
             line-height: 1.55;
         }
         .rz-muted {
-            color: #b9ccee;
+            color: #ffffff;
             font-size: 0.95rem;
         }
         div[data-testid="stMetricValue"] {
@@ -55,7 +55,7 @@ def render_theme() -> None:
             color: #b9ccee;
         }
         .stMarkdown p, .stMarkdown li, label, .stCaption {
-            color: #e4edff;
+            color: #ffffff;
         }
         .stButton > button {
             background: linear-gradient(135deg, #2779ff, #5b8cff);
@@ -70,7 +70,7 @@ def render_theme() -> None:
             color: white;
         }
         .rz-navline {
-            color: #a9c1ea;
+            color: #ffffff;
             font-weight: 600;
             letter-spacing: .01em;
             margin: 0.1rem 0 1rem 0;
