@@ -1,4 +1,4 @@
-"""Estilo visual comum (fundo suave, tipografia, cartoes)."""
+"""Tema visual dark futurista para o app."""
 
 import streamlit as st
 
@@ -12,41 +12,68 @@ def render_theme() -> None:
             font-family: 'DM Sans', system-ui, sans-serif;
         }
         .stApp {
-            background: linear-gradient(165deg, #f7f5f2 0%, #eef3f0 45%, #e8f0ec 100%);
+            background: radial-gradient(circle at 0% 0%, #11305f 0%, #0c1f3a 42%, #080f1f 100%);
         }
         [data-testid="stHeader"] { background: transparent; }
+        [data-testid="stSidebar"] { display: none; }
+        [data-testid="collapsedControl"] { display: none; }
+        [data-testid="stToolbar"] { right: 0.7rem; }
         [data-testid="stSidebar"] {
             background: rgba(255,255,255,0.55);
             border-right: 1px solid rgba(45,106,79,0.12);
         }
         h1 {
-            color: #1b4332;
+            color: #ffffff;
             font-weight: 700;
             letter-spacing: -0.02em;
         }
         h2, h3 {
-            color: #2d6a4f;
+            color: #dbe8ff;
             font-weight: 600;
         }
         .rz-card {
-            background: rgba(255,255,255,0.85);
-            border: 1px solid rgba(45,106,79,0.15);
+            background: linear-gradient(180deg, rgba(18,37,71,0.86), rgba(13,26,50,0.88));
+            border: 1px solid rgba(94,151,255,0.28);
             border-radius: 16px;
             padding: 1.25rem 1.5rem;
             margin-bottom: 1rem;
-            box-shadow: 0 8px 24px rgba(27, 67, 50, 0.06);
+            box-shadow: 0 14px 34px rgba(3, 9, 22, 0.38);
         }
         .rz-lead {
             font-size: 1.15rem;
-            color: #344e41;
+            color: #ecf2ff;
             line-height: 1.55;
         }
         .rz-muted {
-            color: #52796f;
+            color: #b9ccee;
             font-size: 0.95rem;
         }
         div[data-testid="stMetricValue"] {
-            color: #1b4332;
+            color: #f4f8ff;
+        }
+        div[data-testid="stMetricLabel"] {
+            color: #b9ccee;
+        }
+        .stMarkdown p, .stMarkdown li, label, .stCaption {
+            color: #e4edff;
+        }
+        .stButton > button {
+            background: linear-gradient(135deg, #2779ff, #5b8cff);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 8px 18px rgba(39, 121, 255, 0.35);
+        }
+        .stButton > button:hover {
+            background: linear-gradient(135deg, #3f8bff, #79a4ff);
+            color: white;
+        }
+        .rz-navline {
+            color: #a9c1ea;
+            font-weight: 600;
+            letter-spacing: .01em;
+            margin: 0.1rem 0 1rem 0;
         }
         </style>
         """,
@@ -55,7 +82,7 @@ def render_theme() -> None:
 
 
 def card_html(title: str, body: str) -> str:
-    return f'<div class="rz-card"><strong style="color:#2d6a4f">{title}</strong><p class="rz-muted" style="margin:0.5rem 0 0 0">{body}</p></div>'
+    return f'<div class="rz-card"><strong style="color:#f4f8ff">{title}</strong><p class="rz-muted" style="margin:0.5rem 0 0 0">{body}</p></div>'
 
 
 def lead(text: str) -> None:
