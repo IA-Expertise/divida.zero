@@ -440,12 +440,49 @@ Instrucao: use estes dados como base. Seja realista, acolhedor e encorajador sem
 """
 
 
-def gerar_estrategia_com_ia(contexto: str) -> tuple[str | None, str | None]:
-    api_key = os.getenv("OPENAI_API_KEY")
+def validar_openai_api_key() -> tuple[bool, str | None]:
+    """Verifica se a OPENAI_API_KEY esta configurada e e aceita pela API.
+
+    Retorna (True, None) se valida, ou (False, mensagem_de_erro) caso contrario.
+    Usa uma chamada minima (max_tokens=1) para nao gerar custo significativo.
+    """
+    import logging
+
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
     if not api_key:
-        return None, "OPENAI_API_KEY nao configurada."
+        return False, "OPENAI_API_KEY nao configurada ou vazia."
+
+    try:
+        from openai import AuthenticationError, OpenAI
+
+        client = OpenAI(api_key=api_key)
+        client.chat.completions.create(
+            model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+            messages=[{"role": "user", "content": "ping"}],
+            max_tokens=1,
+        )
+        logging.info("validar_openai_api_key: chave valida.")
+        return True, None
+    except AuthenticationError as exc:
+        msg = f"Chave OpenAI invalida ou sem permissao (AuthenticationError): {exc}"
+        logging.error("validar_openai_api_key: %s", msg)
+        return False, msg
+    except Exception as exc:
+        msg = f"Erro ao validar chave OpenAI: {exc}"
+        logging.error("validar_openai_api_key: %s", msg)
+        return False, msg
+
+
+def gerar_estrategia_com_ia(contexto: str) -> tuple[str | None, str | None]:
+    import logging
+
+    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        return None, "OPENAI_API_KEY nao configurada ou vazia."
 
     model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+    logging.info("gerar_estrategia_com_ia: usando modelo '%s'.", model)
+
     system = (
         "Voce e um planejador financeiro educacional para pessoas e pequenas empresas no Brasil. "
         "Responda em portugues do Brasil, com tom acolhedor e direto, sem julgar. "
@@ -460,7 +497,13 @@ def gerar_estrategia_com_ia(contexto: str) -> tuple[str | None, str | None]:
     )
 
     try:
-        from openai import OpenAI
+        from openai import (
+            APIConnectionError,
+            APIStatusError,
+            AuthenticationError,
+            OpenAI,
+            RateLimitError,
+        )
 
         client = OpenAI(api_key=api_key)
         completion = client.chat.completions.create(
@@ -473,9 +516,28 @@ def gerar_estrategia_com_ia(contexto: str) -> tuple[str | None, str | None]:
             max_tokens=2200,
         )
         texto = completion.choices[0].message.content
+        logging.info("gerar_estrategia_com_ia: resposta recebida com sucesso.")
         return texto, None
+    except AuthenticationError as exc:
+        msg = f"Chave OpenAI invalida ou sem permissao. Verifique OPENAI_API_KEY. Detalhe: {exc}"
+        logging.error("gerar_estrategia_com_ia: AuthenticationError — %s", exc)
+        return None, msg
+    except RateLimitError as exc:
+        msg = f"Limite de requisicoes ou cota da OpenAI atingido. Tente novamente em instantes. Detalhe: {exc}"
+        logging.error("gerar_estrategia_com_ia: RateLimitError — %s", exc)
+        return None, msg
+    except APIConnectionError as exc:
+        msg = f"Nao foi possivel conectar a API da OpenAI. Verifique a conectividade do servidor. Detalhe: {exc}"
+        logging.error("gerar_estrategia_com_ia: APIConnectionError — %s", exc)
+        return None, msg
+    except APIStatusError as exc:
+        msg = f"Erro HTTP {exc.status_code} retornado pela API da OpenAI. Detalhe: {exc.message}"
+        logging.error("gerar_estrategia_com_ia: APIStatusError %s — %s", exc.status_code, exc.message)
+        return None, msg
     except Exception as exc:
-        return None, str(exc)
+        msg = f"Erro inesperado ao chamar a OpenAI (modelo: {model}): {exc}"
+        logging.error("gerar_estrategia_com_ia: erro inesperado — %s", exc)
+        return None, msg
 
 
 def compute_full_analysis(dados: dict) -> dict:
