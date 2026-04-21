@@ -23,13 +23,16 @@ def render_theme() -> None:
             border-right: 1px solid rgba(45,106,79,0.12);
         }
         h1 {
-            color: #ffffff;
+            color: #ffffff !important;
             font-weight: 700;
             letter-spacing: -0.02em;
         }
         h2, h3 {
-            color: #dbe8ff;
+            color: #ffffff !important;
             font-weight: 600;
+        }
+        h4, h5, h6 {
+            color: #ffffff !important;
         }
         .rz-card {
             background: linear-gradient(180deg, rgba(18,37,71,0.86), rgba(13,26,50,0.88));
@@ -41,11 +44,11 @@ def render_theme() -> None:
         }
         .rz-lead {
             font-size: 1.15rem;
-            color: #ecf2ff;
+            color: #ffffff !important;
             line-height: 1.55;
         }
         .rz-muted {
-            color: #ffffff;
+            color: #ffffff !important;
             font-size: 0.95rem;
         }
         div[data-testid="stMetricValue"] {
@@ -54,8 +57,22 @@ def render_theme() -> None:
         div[data-testid="stMetricLabel"] {
             color: #b9ccee;
         }
-        .stMarkdown p, .stMarkdown li, label, .stCaption {
-            color: #ffffff;
+        .stMarkdown p, .stMarkdown li, .stMarkdown span, .stCaption, label {
+            color: #ffffff !important;
+        }
+        [data-testid="stForm"] p,
+        [data-testid="stForm"] label,
+        [data-testid="stForm"] span,
+        [data-testid="stForm"] div {
+            color: #ffffff !important;
+        }
+        [data-baseweb="radio"] label,
+        [data-baseweb="checkbox"] label,
+        [data-baseweb="select"] * {
+            color: #ffffff !important;
+        }
+        .stRadio label, .stCheckbox label, .stSelectbox label, .stTextInput label, .stNumberInput label, .stTextArea label {
+            color: #ffffff !important;
         }
         .stButton > button {
             background: linear-gradient(135deg, #2779ff, #5b8cff);
