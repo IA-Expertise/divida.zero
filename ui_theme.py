@@ -12,16 +12,17 @@ def render_theme() -> None:
             font-family: 'DM Sans', system-ui, sans-serif;
         }
         .stApp {
-            background: radial-gradient(circle at 0% 0%, #11305f 0%, #0c1f3a 42%, #080f1f 100%);
+            background: radial-gradient(circle at 0% 0%, #112b55 0%, #0b1c36 46%, #071325 100%);
+        }
+        .block-container {
+            max-width: 860px;
+            padding-top: 1.6rem;
+            padding-bottom: 2rem;
         }
         [data-testid="stHeader"] { background: transparent; }
         [data-testid="stSidebar"] { display: none; }
         [data-testid="collapsedControl"] { display: none; }
         [data-testid="stToolbar"] { right: 0.7rem; }
-        [data-testid="stSidebar"] {
-            background: rgba(255,255,255,0.55);
-            border-right: 1px solid rgba(45,106,79,0.12);
-        }
         h1 {
             color: #ffffff !important;
             font-weight: 700;
@@ -37,10 +38,10 @@ def render_theme() -> None:
         .rz-card {
             background: linear-gradient(180deg, rgba(18,37,71,0.86), rgba(13,26,50,0.88));
             border: 1px solid rgba(94,151,255,0.28);
-            border-radius: 16px;
-            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
             margin-bottom: 1rem;
-            box-shadow: 0 14px 34px rgba(3, 9, 22, 0.38);
+            box-shadow: 0 8px 24px rgba(3, 9, 22, 0.34);
         }
         .rz-lead {
             font-size: 1.15rem;
@@ -74,23 +75,60 @@ def render_theme() -> None:
         .stRadio label, .stCheckbox label, .stSelectbox label, .stTextInput label, .stNumberInput label, .stTextArea label {
             color: #ffffff !important;
         }
+        [data-baseweb="input"] input,
+        [data-baseweb="textarea"] textarea,
+        [data-baseweb="select"] > div {
+            background: rgba(17, 36, 67, 0.72) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(131, 168, 231, 0.24) !important;
+            border-radius: 8px !important;
+        }
+        [data-baseweb="input"] input::placeholder,
+        [data-baseweb="textarea"] textarea::placeholder {
+            color: #b7c8e8 !important;
+        }
+        [data-testid="stForm"] {
+            background: rgba(10, 22, 42, 0.40);
+            border: 1px solid rgba(92, 141, 227, 0.18);
+            border-radius: 14px;
+            padding: 1rem 1rem 0.4rem 1rem;
+        }
         .stButton > button {
-            background: linear-gradient(135deg, #2779ff, #5b8cff);
+            background: linear-gradient(135deg, #2a6fe0, #5489e3);
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             font-weight: 600;
-            box-shadow: 0 8px 18px rgba(39, 121, 255, 0.35);
+            box-shadow: 0 4px 12px rgba(39, 121, 255, 0.28);
+            min-height: 2.2rem;
+            font-size: 0.85rem;
         }
         .stButton > button:hover {
-            background: linear-gradient(135deg, #3f8bff, #79a4ff);
+            background: linear-gradient(135deg, #3b7de8, #699ae9);
             color: white;
         }
         .rz-navline {
             color: #ffffff;
-            font-weight: 600;
+            font-weight: 500;
+            font-size: 0.84rem;
             letter-spacing: .01em;
-            margin: 0.1rem 0 1rem 0;
+            margin: 0.1rem 0 0.7rem 0;
+        }
+        .rz-topchip {
+            display: inline-block;
+            color: #d5e6ff;
+            font-size: 0.78rem;
+            border: 1px solid rgba(108, 152, 233, 0.35);
+            border-radius: 8px;
+            padding: 0.2rem 0.5rem;
+            background: rgba(28, 52, 92, 0.45);
+            margin-bottom: 0.7rem;
+        }
+        .rz-sub {
+            color: #bcd0ef !important;
+            font-size: 0.88rem;
+            margin-top: -0.2rem;
+            margin-bottom: 0.9rem;
         }
         </style>
         """,

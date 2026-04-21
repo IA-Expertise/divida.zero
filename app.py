@@ -12,6 +12,7 @@ from ui_theme import card_html, lead, render_theme
 
 RZ = "rz_dados"
 STEP_KEY = "rz_step"
+INTRO_KEY = "rz_intro_done"
 
 
 def _plotly_dark(fig: go.Figure) -> go.Figure:
@@ -29,10 +30,17 @@ def _init_state() -> None:
         st.session_state[RZ] = None
     if STEP_KEY not in st.session_state:
         st.session_state[STEP_KEY] = "perfil"
+    if INTRO_KEY not in st.session_state:
+        st.session_state[INTRO_KEY] = False
 
 
 def _header_and_nav() -> None:
+    st.markdown('<span class="rz-topchip">← Início</span>', unsafe_allow_html=True)
     st.markdown("## 🧭 Bússola Inteligente - Dívida Zero")
+    st.markdown(
+        '<p class="rz-sub">Use a Bússola Inteligente para corrigir a rota da sua empresa e organizar a quitação.</p>',
+        unsafe_allow_html=True,
+    )
     st.markdown(
         '<p class="rz-navline">(1) Perfil e Dívidas ---- (2) Dashboard e Plano ---- (3) Jornada e Metas</p>',
         unsafe_allow_html=True,
@@ -50,6 +58,67 @@ def _header_and_nav() -> None:
             st.session_state[STEP_KEY] = "jornada"
 
     st.divider()
+
+
+def _render_intro() -> None:
+    st.markdown('<span class="rz-topchip">IAExpertise</span>', unsafe_allow_html=True)
+    st.markdown("## Bússola Inteligente 🧭")
+    st.markdown(
+        '<p class="rz-sub">O mapa para tirar sua vida financeira do invisível e colocar no controle.</p>',
+        unsafe_allow_html=True,
+    )
+
+    video_url = os.getenv("BUSSOLA_VIDEO_URL", "").strip()
+    if video_url:
+        st.video(video_url)
+    else:
+        st.info("Configure a URL do vídeo em `BUSSOLA_VIDEO_URL` (variável de ambiente).")
+
+    st.markdown(
+        card_html(
+            "Qual é o objetivo do app?",
+            (
+                "A Bússola Inteligente - Dívida Zero foi criada para transformar confusão em direção prática. "
+                "Você informa sua situação real, entende o impacto das dívidas no mês, compara estratégias de "
+                "quitação e sai com um plano executável, com prioridade do que atacar primeiro."
+            ),
+        ),
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        card_html(
+            "Como usar em 3 passos",
+            (
+                "1) Preencha Perfil e Dívidas com honestidade. "
+                "2) Veja o Dashboard para comparar rotas e ajustar cenário. "
+                "3) Siga a Jornada de metas para manter consistência até ver a dívida desaparecer."
+            ),
+        ),
+        unsafe_allow_html=True,
+    )
+
+    c1, c2, c3 = st.columns([1, 2, 1])
+    with c2:
+        if st.button("Quero analisar minha situação", use_container_width=True):
+            st.session_state[INTRO_KEY] = True
+            st.rerun()
+
+    st.divider()
+    st.markdown(
+        "<p style='text-align:center; color:#7ea3da; font-weight:600; margin-bottom:0.2rem;'>IAExpertise</p>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        "<p style='text-align:center; color:#ffffff; margin-top:0; margin-bottom:0.4rem;'>"
+        "Eduardo Augusto Sona — Jornalista e Especialista em IA"
+        "</p>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        "<p style='text-align:center; color:#cfe0ff;'>🔒 Dados protegidos (LGPD)</p>",
+        unsafe_allow_html=True,
+    )
 
 
 def _render_perfil() -> None:
@@ -376,6 +445,11 @@ def main() -> None:
     st.set_page_config(page_title="Bussola Inteligente - Divida Zero", page_icon="🧭", layout="wide")
     render_theme()
     _init_state()
+
+    if not st.session_state[INTRO_KEY]:
+        _render_intro()
+        return
+
     _header_and_nav()
 
     step = st.session_state[STEP_KEY]
